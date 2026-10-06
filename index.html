@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>إلى حنان ❤️</title>
+    <meta name="theme-color" content="#2b1220">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="petals" id="petals" aria-hidden="true"></div>
+
+    <main>
+        <!-- الصفحة الرئيسية -->
+        <section class="hero">
+            <div class="hero-content">
+                <p class="small-title">إلى أجمل إنسانة</p>
+                <h1>حنان</h1>
+                <h2>أنتِ أجمل صدفة في حياتي</h2>
+                <p class="intro">
+                    هذه الصفحة الصغيرة لا تستطيع أن تصف كل ما أشعر به تجاهكِ،
+                    لكنها تحمل بعض الكلمات التي خرجت من قلبي.
+                </p>
+                <a href="#message" class="button">اقرئي رسالتي</a>
+            </div>
+            <span class="scroll-hint" aria-hidden="true"></span>
+        </section>
+
+        <!-- الرسالة -->
+        <section id="message" class="message-section">
+            <article class="letter">
+                <div class="heart" aria-hidden="true">❤️</div>
+                <h2>إلى حنان</h2>
+                <p>حنان، منذ أن عرفتكِ أصبحت للحياة ألوان أجمل.</p>
+                <p>وجودكِ في حياتي شيء لا أعتبره أبداً أمراً عادياً. أنتِ شخص مميز، ولكِ مكان خاص في قلبي.</p>
+                <p>أحب ابتسامتكِ، أحب طريقتكِ، وأحب التفاصيل الصغيرة التي تجعلكِ أنتِ.</p>
+                <p class="big-love">أحبكِ</p>
+                <p>وربما الكلمات لا تكفي لأقول لكِ كل ما بداخلي، لكنني أتمنى أن تعرفي دائماً أنكِ غالية جداً على قلبي.</p>
+            </article>
+        </section>
+
+        <!-- الصور -->
+        <section class="gallery-section">
+            <h2>ذكريات جميلة مع حنان</h2>
+            <p class="gallery-intro">بعض الصور الجميلة لشخص أجمل ❤️</p>
+            <div class="gallery">
+                <button class="photo" type="button"><img src="images/hanane1.jpeg" alt="حنان" loading="lazy"></button>
+                <button class="photo" type="button"><img src="images/hanane2.jpeg" alt="حنان" loading="lazy"></button>
+                <button class="photo" type="button"><img src="images/hanane3.jpeg" alt="حنان" loading="lazy"></button>
+            </div>
+        </section>
+
+        <!-- اقتباس -->
+        <section class="quote-section">
+            <blockquote class="quote">
+                <p>بعض الأشخاص يدخلون حياتنا صدفة، ثم يصبحون أجمل شيء فيها.</p>
+                <span>— إلى حنان</span>
+            </blockquote>
+        </section>
+
+        <footer>
+            <p>صممت هذه الصفحة خصيصاً لكِ</p>
+            <p class="footer-name">حنان، أنتِ دائماً في قلبي ❤️</p>
+        </footer>
+    </main>
+
+    <!-- عرض الصورة -->
+    <div class="lightbox" id="lightbox" hidden>
+        <img alt="">
+    </div>
+
+    <script>
+        // بتلات قلوب هادئة
+        const box = document.getElementById('petals');
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            for (let i = 0; i < 14; i++) {
+                const s = document.createElement('span');
+                const size = 10 + Math.random() * 16;
+                s.style.cssText = `left:${Math.random()*100}%;width:${size}px;height:${size}px;` +
+                    `animation-duration:${12 + Math.random()*12}s;animation-delay:${-Math.random()*20}s;` +
+                    `opacity:${0.25 + Math.random()*0.35}`;
+                box.appendChild(s);
+            }
+        }
+
+        // ظهور فقرات الرسالة تدريجياً
+        const io = new IntersectionObserver(es => es.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        }), { threshold: 0.3 });
+        document.querySelectorAll('.letter p').forEach((p, i) => {
+            p.style.transitionDelay = (i * 0.12) + 's';
+            io.observe(p);
+        });
+
+        // تكبير الصور
+        const lb = document.getElementById('lightbox'), lbImg = lb.querySelector('img');
+        document.querySelectorAll('.photo').forEach(b => b.addEventListener('click', () => {
+            const img = b.querySelector('img');
+            lbImg.src = img.src; lbImg.alt = img.alt; lb.hidden = false;
+        }));
+        lb.addEventListener('click', () => lb.hidden = true);
+        addEventListener('keydown', e => { if (e.key === 'Escape') lb.hidden = true; });
+    </script>
+</body>
+</html>
